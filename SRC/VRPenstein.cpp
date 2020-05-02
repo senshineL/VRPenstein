@@ -1,7 +1,5 @@
 /*
-An efficient memetic algorithm for solving the 
-Simaultanes Delivery and Pick-up Vehicle Routing
-Problem with Time Windows (VRPSDPTW)
+A parameterized meta-heuristic for the vehicle routing problems (VRP)
 
 Created on: 2020.3.13
 by Shengcai Liu
