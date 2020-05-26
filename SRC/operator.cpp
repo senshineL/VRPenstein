@@ -1218,6 +1218,7 @@ void do_local_search(Solution &s, Data &data)
         printf("No small stepsize operator used, directly return.\n");
         return;
     }
+    if (data.escape_local_optima == 0) return;
     static int tmp_solution_num = int(data.destroy_opts.size()) * int(data.repair_opts.size());
     if (data.rd_removal_insertion)
         tmp_solution_num = 1;
