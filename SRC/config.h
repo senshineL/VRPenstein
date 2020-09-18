@@ -15,7 +15,7 @@ const int G_1 = 500; //default max generations when no improving
 const int RUNS = 10; //default max restart times
 const int P_SIZE = 64; //default population size
 const double PRECISION = 0.001; // difference smaller than this is considered the same
-const int OUTPUT_PER_GENS = 2; // output per generations
+const int OUTPUT_PER_GENS = 1; // output per generations
 const bool DEFAULT_IF_OUTPUT = false;
 
 /* pre-processing */
@@ -32,7 +32,7 @@ const int DEFAULT_OR_OPT_LEN = 3;
 const int DEFAUTL_EX_LEN = 2;
 
 /* large neighborhood opts */
-const int DEFAULT_ELO = 1;
+const int DEFAULT_ELO = 1; // 0 means not using large neighborhood, -1 means not using local search
 const double DEFAULT_DESTROY_RATIO_L = 0.2;
 const double DEFAULT_DESTROY_RATIO_U = 0.4;
 const bool DEFAULT_RD_REMOVAL = false;
@@ -46,6 +46,7 @@ each time building a new route with an arbitrary selected customer.
 K is the number of the selected initial customers. The final solution
 is the best one among the K solutions */
 const std::string RCRS = "rcrs"; // RCRS insertion heuristic
+const std::string RCRS_RANDOM = "rcrs_random"; // RCRS with random parameters
 const std::string TD = "td";  // travel-distance based insertion
 const std::string REGRET = "regret";
 
@@ -59,6 +60,9 @@ const std::string CIRCLE = "circle"; // circle selection, every two individuals 
 const std::string TOURNAMENT = "tournament"; // tournament selection
 const std::string RDSELECTION = "rdslection"; // uniformly random selection
 const std::string DEFAULT_SEL = CIRCLE;
+
+/* Crossover */
+const bool DEFAULT_NO_CROSSOVER = false;
 
 /* Replacement */
 const std::string ONE_ON_ONE = "one_on_one";

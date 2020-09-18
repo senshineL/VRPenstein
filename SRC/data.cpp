@@ -262,6 +262,12 @@ Data::Data(ArgumentParser &parser)
     else
         printf("O(1) evaluation: off");
 
+    if (parser.exists("no_crossover"))
+    {
+        printf("No crossover used\n");
+        this->no_croosover = true;
+    }
+
     if (parser.exists("two_opt"))
     {
         printf("2-opt: on\n");

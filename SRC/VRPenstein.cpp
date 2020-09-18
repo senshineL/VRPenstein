@@ -48,6 +48,7 @@ int main(int argc, char **argv)
     parser.addArgument("--pop_size", 1);
     parser.addArgument("--init", 1);
     parser.addArgument("--k_init", 1);
+    parser.addArgument("--no_crossover");
     parser.addArgument("--cross_repair", 1);
     parser.addArgument("--k_crossover", 1);
     parser.addArgument("--parent_selection", 1);

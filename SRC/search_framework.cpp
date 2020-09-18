@@ -46,6 +46,17 @@ void initialization(vector<Solution> &pop, vector<double> &pop_fit, vector<int> 
             new_route_insertion(pop[i], data);
         }
     }
+    else if (data.init == RCRS_RANDOM)
+    {
+        data.n_insert = RCRS;
+        data.ksize = data.k_init;
+        for (int i = 0; i < len; i++)
+        {
+            data.lambda_gamma = std::make_tuple(rand(0, 1, data.rng), rand(0, 1, data.rng));
+            printf("lambda, gamma: %f, %f\n", get<0>(data.lambda_gamma), get<1>(data.lambda_gamma));
+            new_route_insertion(pop[i], data);
+        }
+    }
     else if (data.init == TD)
     {
         data.ksize = data.k_init;
@@ -165,6 +176,12 @@ void update_candidate_routes(Route &r, std::unordered_set<int> &inserted, Soluti
 
 void crossover(Solution &s1, Solution &s2, Solution &ch, Data &data)
 {
+    if (data.no_croosover)
+    {
+        ch = s1;
+        return;
+    }
+
     vector<int> candidate_r_1(s1.len());
     std::iota(candidate_r_1.begin(), candidate_r_1.end(), 0);
     vector<int> candidate_r_2(s2.len());
@@ -243,10 +260,10 @@ void local_search(vector<Solution> &pop, vector<double> &pop_fit, vector<int> &p
     {
         if (rand(0, 1, data.rng) < data.ls_prob)
         {
-            // cout << "Individual " << i+1 << ". Before Cost " << pop[i].cost << ".";
+            cout << "Individual " << i+1 << ". Before Cost " << pop[i].cost << ".";
             do_local_search(pop[i], data);
             pop_fit[i] = pop[i].cost;
-            // cout << " After Cost " << pop_fit[i] << endl;
+            cout << " After Cost " << pop_fit[i] << endl;
         }
     }
     argsort(pop_fit, pop_argrank, len);
@@ -319,7 +336,13 @@ void search_framework(Data &data, Solution &best_s)
         int no_improve = 0;
         int gen = 0;
         initialization(pop, pop_fit, pop_argrank, data);
+        used = (clock() - stime) / CLOCKS_PER_SEC;
+        printf("already consumed %d sec\n", used);
+
         local_search(pop, pop_fit, pop_argrank, data);
+        used = (clock() - stime) / CLOCKS_PER_SEC;
+        printf("already consumed %d sec\n", used);
+
         printf("After local search\n");
         output(pop, pop_fit, pop_argrank, data);
         double cost_in_this_run = pop_fit[pop_argrank[0]];
@@ -332,6 +355,8 @@ void search_framework(Data &data, Solution &best_s)
             select_parents(pop, pop_fit, p_indice, data);
             // crossover
             crossover(pop, data, p_indice, child);
+            used = (clock() - stime) / CLOCKS_PER_SEC;
+            printf("already consumed %d sec\n", used);
             // do local search for children
             local_search(child, child_fit, child_argrank, data);
             // replacement

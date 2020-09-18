@@ -1218,13 +1218,18 @@ void do_local_search(Solution &s, Data &data)
         printf("No small stepsize operator used, directly return.\n");
         return;
     }
+    // not using local search
+    if (data.escape_local_optima == -1) return;
+
+    find_local_optima(s, data);
+    s.cal_cost(data);
+    // not using large neighborhood
     if (data.escape_local_optima == 0) return;
+
     static int tmp_solution_num = int(data.destroy_opts.size()) * int(data.repair_opts.size());
     if (data.rd_removal_insertion)
         tmp_solution_num = 1;
     static std::vector<Solution> s_vector(tmp_solution_num);
-    find_local_optima(s, data);
-    s.cal_cost(data);
 
     int no_improve = 0;
     while (no_improve < data.escape_local_optima)
