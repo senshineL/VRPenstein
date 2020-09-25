@@ -236,7 +236,7 @@ void crossover(vector<Solution> &pop, Data &data, vector<tuple<int,int>> &p_indi
         else
             crossover(pop[get<1>(index_t)], pop[get<0>(index_t)], child[count], data);
         count++;
-        cout << "Child " << count << ". Parent Indice: (" << get<0>(index_t) <<\
+        // cout << "Child " << count << ". Parent Indice: (" << get<0>(index_t) <<\
                 "," << get<1>(index_t) << "). Cost: " << child[count-1].cost << endl;
     }
 }
@@ -260,10 +260,10 @@ void local_search(vector<Solution> &pop, vector<double> &pop_fit, vector<int> &p
     {
         if (rand(0, 1, data.rng) < data.ls_prob)
         {
-            cout << "Individual " << i+1 << ". Before Cost " << pop[i].cost << ".";
+            // cout << "Individual " << i+1 << ". Before Cost " << pop[i].cost << ".";
             do_local_search(pop[i], data);
             pop_fit[i] = pop[i].cost;
-            cout << " After Cost " << pop_fit[i] << endl;
+            // cout << " After Cost " << pop_fit[i] << endl;
         }
     }
     argsort(pop_fit, pop_argrank, len);
