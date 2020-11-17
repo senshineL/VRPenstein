@@ -254,6 +254,12 @@ Data::Data(ArgumentParser &parser)
         this->ls_prob = std::stod(parser.retrieve<std::string>("ls_prob"));
     printf("Local search probability: %.2f\n", this->ls_prob);
 
+    if (parser.exists("skip_finding_lo"))
+    {
+        printf("Skip finding_local_optima\n");
+        this->skip_finding_lo = true;
+    }
+
     if (parser.exists("O_1_eval"))
     {
         printf("O(1) evaluation: on\n");
@@ -265,7 +271,7 @@ Data::Data(ArgumentParser &parser)
     if (parser.exists("no_crossover"))
     {
         printf("No crossover used\n");
-        this->no_croosover = true;
+        this->no_crossover = true;
     }
 
     if (parser.exists("two_opt"))

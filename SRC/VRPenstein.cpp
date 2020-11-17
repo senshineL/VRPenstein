@@ -15,6 +15,10 @@ clock_t find_bks_time;
 int find_bks_run;
 int find_bks_gen;
 bool find_better;
+long call_count_move_eval;
+double mean_duration_move_eval;
+double mean_route_len;
+
 
 void signalHandler(int signum)
 {
@@ -33,6 +37,9 @@ int main(int argc, char **argv)
     find_best_run = find_bks_run = 0;
     find_best_gen = find_bks_gen = 0;
     find_better = false;
+    call_count_move_eval = 0;
+    mean_duration_move_eval = 0.0;
+    mean_route_len = 0.0;
     signal(SIGINT, signalHandler);
     signal(SIGTERM, signalHandler);
     ArgumentParser parser;
@@ -54,6 +61,7 @@ int main(int argc, char **argv)
     parser.addArgument("--parent_selection", 1);
     parser.addArgument("--replacement", 1);
     parser.addArgument("--ls_prob", 1);
+    parser.addArgument("--skip_finding_lo");
     parser.addArgument("--O_1_eval");
     parser.addArgument("--two_opt");
     parser.addArgument("--two_opt_star");

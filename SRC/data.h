@@ -54,7 +54,7 @@ public:
     // parameters
     bool pruning = DEFAULT_PRUNING; // whether do pruning
     bool O_1_evl = DEFAULT_O_1_EVAL; // whether do O(1) evaluation
-    bool no_croosover = DEFAULT_NO_CROSSOVER; // whether do crossover
+    bool no_crossover = DEFAULT_NO_CROSSOVER; // whether do crossover
     bool if_output = DEFAULT_IF_OUTPUT; // whether output to file
     std::string output = " "; // output file path
     int tmax = NO_LIMIT; // max running time (s), -1 means no limit
@@ -77,6 +77,7 @@ public:
     std::string replacement = DEFAULT_REPLACEMENT; //replacement strategy
 
     double ls_prob = DEFAULT_LS_PROB; //local search probability
+    bool skip_finding_lo = DEFAULT_SKIP_FINDING_LO; // if skip finding_local_optima
     std::map<std::string, std::vector<Move>> mem;
     bool two_opt = DEFAULT_2_OPT; // 2-opt
     std::vector<Move> mem_2opt;

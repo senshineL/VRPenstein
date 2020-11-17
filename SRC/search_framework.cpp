@@ -6,6 +6,8 @@ extern int find_best_gen;
 extern int find_bks_run;
 extern int find_bks_gen;
 extern bool find_better;
+extern long call_count_move_eval;
+extern long mean_duration_move_eval;
 
 void update_best_solution(Solution &s, Solution &best_s, clock_t used, int run, int gen, Data &data)
 {
@@ -176,7 +178,7 @@ void update_candidate_routes(Route &r, std::unordered_set<int> &inserted, Soluti
 
 void crossover(Solution &s1, Solution &s2, Solution &ch, Data &data)
 {
-    if (data.no_croosover)
+    if (data.no_crossover)
     {
         ch = s1;
         return;
@@ -394,6 +396,10 @@ void search_framework(Data &data, Solution &best_s)
     }
     // output best solution
     printf("------------Summary-----------\n");
+    if (BENCHMARKING_O_1_EVAL)
+    {
+        printf("Number of move eval calls: %d, average time: %d nanosecs\n", call_count_move_eval, mean_duration_move_eval);
+    }
     printf("Total %d runs, total consumed %d sec\n", run, int(used));
     best_s.output(data);
     printf("In run %d, gen %d, find this solution, at time %d.\n", find_best_run, find_best_gen, int(find_best_time));

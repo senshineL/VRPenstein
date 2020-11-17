@@ -1103,6 +1103,7 @@ void snippet(int r1, int r2, std::string &opt, Solution &s, Data &data, Move &ta
 
 void find_local_optima(Solution &s, Data &data)
 {
+    if (data.skip_finding_lo) return;
     // record the best solution in the neighborhood of each small opt
     std::vector<Move> move_list(int(data.small_opts.size()));
 

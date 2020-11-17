@@ -2,6 +2,7 @@
 #include "solution.h"
 #include "data.h"
 #include "move.h"
+#include <chrono>
 
 void chk_nl_node_pos_O_n(std::vector<int> &nl, int inserted_node, int pos, Data &data, bool &flag, double &cost);
 

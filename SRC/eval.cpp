@@ -1,5 +1,11 @@
 # include "eval.h"
 
+extern long call_count_move_eval;
+extern double mean_duration_move_eval;
+extern double mean_route_len;
+
+using namespace std::chrono;
+
 void chk_nl_node_pos_O_n(std::vector<int> &nl, int inserted_node, int pos, Data &data, bool &flag, double &cost)
 {
     int len = int(nl.size());
@@ -54,6 +60,8 @@ void chk_nl_node_pos_O_n(std::vector<int> &nl, int inserted_node, int pos, Data 
 
 void chk_route_O_n(Route &r, Data &data, bool &flag, double &cost)
 {
+    // auto start = high_resolution_clock::now();
+
     /* time complexity O(n) */
     std::vector<int> &nl = r.node_list;
     int len = int(nl.size());
@@ -89,6 +97,23 @@ void chk_route_O_n(Route &r, Data &data, bool &flag, double &cost)
 
     flag = true;
     cost = data.vehicle.d_cost + distance * data.vehicle.unit_cost;
+
+    // only count those feasible routes
+    // if (BENCHMARKING_O_1_EVAL)
+    // {
+    //     auto duration = long(duration_cast<nanoseconds>(high_resolution_clock::now() - start).count());
+    //     call_count_move_eval += 1;
+    //     // std::cout << call_count_move_eval << std::endl;
+    //     mean_duration_move_eval += 1.0 / double(call_count_move_eval) * (double(duration) - mean_duration_move_eval);
+    //     // mean_duration_move_eval += 0.001 * (duration - mean_duration_move_eval);
+    //     mean_route_len += 1.0 / double(call_count_move_eval) * (double(len) - mean_route_len);
+    //     // mean_route_len += 0.001 * (double(len) - mean_route_len);
+    //     if (call_count_move_eval >= 500000)
+    //     {
+    //         printf("Number of move eval calls: %d, avg. time: %f nanosecs, avg. len: %f.\n", call_count_move_eval, mean_duration_move_eval, mean_route_len);
+    //         exit(0);
+    //     }
+    // }
 }
 
 bool eval_route(Solution &s, Seq *seqList, int seqListLen, Attr &tmp_attr, Data &data)
@@ -176,7 +201,9 @@ bool eval_move(Solution &s, Move &m, Data &data)
         m.delta_cost = new_cost - ori_cost;
         return true;
     }
+
     /* eval the connection of the seqeunces in m */
+    // auto start = high_resolution_clock::now();
 
     Attr tmp_attr_1;
     if (!eval_route(s, m.seqList_1, m.len_1, tmp_attr_1, data))
@@ -195,5 +222,20 @@ bool eval_move(Solution &s, Move &m, Data &data)
             new_cost += data.vehicle.d_cost + tmp_attr_2.dist * data.vehicle.unit_cost;
     }
     m.delta_cost = new_cost - ori_cost;
+
+    // if (BENCHMARKING_O_1_EVAL)
+    // {
+    //     auto duration = duration_cast<nanoseconds>(high_resolution_clock::now() - start).count();
+    //     auto new_call_count_move_eval = call_count_move_eval + int(r_indice.size());
+    //     // std::cout << call_count_move_eval << std::endl;
+    //     mean_duration_move_eval = 1.0 / double(new_call_count_move_eval) * (double(call_count_move_eval) * mean_duration_move_eval + double(duration));
+    //     call_count_move_eval = new_call_count_move_eval;
+    //     // mean_duration_move_eval += 0.001 * (double(duration) - mean_duration_move_eval);
+    //     if (call_count_move_eval >= 500000)
+    //     {
+    //         printf("Number of move eval calls: %d, average time: %f nanosecs\n", call_count_move_eval, mean_duration_move_eval);
+    //         exit(0);
+    //     }
+    // }
     return true;
 }

@@ -30,6 +30,7 @@ const bool DEFAULT_OR_OPT = false;
 const bool DEFAULT_2_EX = false;
 const int DEFAULT_OR_OPT_LEN = 3;
 const int DEFAUTL_EX_LEN = 2;
+const bool DEFAULT_SKIP_FINDING_LO = false; // if skip find_local_optima
 
 /* large neighborhood opts */
 const int DEFAULT_ELO = 1; // 0 means not using large neighborhood, -1 means not using local search
@@ -75,3 +76,6 @@ const double PENALTY_FACTOR = 10.0; // penalty factor for tw constraint
 
 // The flags for a sequence status
 const int INFEASIBLE = -1;
+
+// If benchmarking O(1) evaluation
+const bool BENCHMARKING_O_1_EVAL = false;
